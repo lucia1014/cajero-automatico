@@ -8,16 +8,16 @@ const btnEnviar = document.querySelector('#btnEnviar');
 const validarUsuario = () => {
 
     for (let i = 0; i < users.length; i++) {
-        if (userInput.value === users[i].nombre){
-            console.log(`Nombre: ${users[i].nombre} Saldo: ${users[i].saldo}`)
-            userInput.value = ''
-            passInput.value = ''
-            return;
+        if (userInput.value === users[i].nombre && passInput.value === users[i].password) {
+                location = "principal.html"
+            } else {
+                alert('Tu Usuario/Contraseña es incorrecto')
+            }
         }
+
+
     }
 
-    alert('Tu Usuario/Contraseña es incorrecto')
-}
-
-
 btnEnviar.addEventListener('click', validarUsuario)
+
+

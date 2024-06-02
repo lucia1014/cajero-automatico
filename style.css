@@ -1,0 +1,34 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: sans-serif;
+    list-style: none;
+}
+
+.fs-7{
+    font-size: 10px;
+}
+
+.bg-bank{
+    background-image: url(./images/bank-log-in.png);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.btn-violet{
+    background-color: blueviolet!important;
+    border-color: blueviolet!important;
+    color: white!important;
+}
+
+.rounded-start-lg {
+    border-bottom-left-radius: 1.375rem !important;
+    border-top-left-radius: 1.375rem !important;
+}
+.rounded-end-lg {
+    border-bottom-right-radius: 1.375rem !important;
+    border-top-right-radius: 1.375rem !important;
+}
