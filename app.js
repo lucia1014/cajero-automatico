@@ -3,8 +3,14 @@
 const userInput = document.querySelector('#userInput');
 const passInput = document.querySelector('#passInput');
 const btnEnviar = document.querySelector('#btnEnviar');
-const formInicioSesion = document.querySelector('.container');
-const btnPantallaDepositar = document.querySelector('#btnPantallaDeposito');
+const container = document.querySelector('.container');
+const inicio = document.querySelector('#inicioSesion');
+
+
+let botonPantallaDepositar,
+    botonPantallaRetirar,
+    botonPantallaCambioPass,
+    botonCerrarSesion;
 
 let usuarioActivo = {
     user: '',
@@ -22,7 +28,7 @@ const validarUsuario = (e) => {
             passInput.value = ''
             usuarioActivo.user = users[i].nombre;
             usuarioActivo.saldo = users[i].saldo;
-            formInicioSesion.innerHTML = mostrarPantallaUsuario(users[i].nombre, users[i].saldo)
+            mostrarPantallaUsuario(users[i].nombre, users[i].saldo);
             return;
         }
     }
@@ -34,14 +40,13 @@ const validarUsuario = (e) => {
 console.log(usuarioActivo)
 
 const mostrarPantallaUsuario = (userActive, userSaldo) => {
-
-    return (
-        `<div class="container">
+    container.innerHTML = `
+        <div class="container">
         <div class="row text-center">
             <div class="col-12">
                 <h1 id="bienvenido">Bienvenido/a a tu banco ${userActive} </h1>
-                <h2>¿Qué acción deseas realizar?</h2>
-                <h3 id="saldoUsuario">Tu saldo actual es de ${userSaldo}</h3>
+                <h2 id="saldoUsuario">Tu saldo actual es de ${userSaldo}</h2>
+                <h4>¿Qué acción deseas realizar?</h4>
             </div>
         </div>
         <div class="row text-center">
@@ -62,16 +67,24 @@ const mostrarPantallaUsuario = (userActive, userSaldo) => {
                 </div>
             </div>
         </div>
-    </div>`
-    )
+    </div>
+    `
+    botonPantallaDepositar = document.getElementById('btnPantallaDeposito');
+    botonPantallaDepositar.addEventListener('click', () => mostrarPantallaDeposito(userSaldo));
 
+    botonPantallaRetirar = document.getElementById('btnPantallaRetiro');
+    botonPantallaRetirar.addEventListener('click', () => mostrarPantallaRetiro(userSaldo));
+
+    botonPantallaCambioPass = document.getElementById('btnPantallaCambioPass');
+    botonPantallaCambioPass.addEventListener('click', () => mostrarPantallaCambiarPass());
+
+    botonCerrarSesion = document.getElementById('btnPantallaCerrarSesion');
+    botonCerrarSesion.addEventListener('click',);
 }
 
-
 const mostrarPantallaDeposito = userSaldo => {
-    formInicioSesion.innerHTML = mostrarPantallaDeposito(users[i].nombre, users[i].saldo)
-    return (
-        `<div class="container">
+    container.innerHTML = `
+    <div class="container">
     <div class="row text-center">
         <div class="col-12">
             <h1 id="saldoUsuario">Tu saldo actual es de $${userSaldo}</h1>
@@ -91,15 +104,22 @@ const mostrarPantallaDeposito = userSaldo => {
             <button type="button" class="" id="btnRegresar">Regresar</button>
         </div>
     </div>
-</div>`
-    )
+</div>
+`
+    const btnRegresar = document.querySelector('#btnRegresar');
+    btnRegresar.addEventListener('click', mostrarPantallaUsuario);
 }
 
-const mostrarPantallaRetiro = () => {
-    formInicioSesion.innerHTML = `<div class="container">
+const depositar = () => {
+
+}
+
+const mostrarPantallaRetiro = userSaldo => {
+    container.innerHTML = `
+    <div class="container">
     <div class="row text-center">
         <div class="col-12">
-            <h1 id="saldoUsuario">Tu saldo actual es de $</h1>
+            <h1 id="saldoUsuario">Tu saldo actual es de $$${userSaldo}</h1>
         </div>
     </div>
     <div class="row text-center">
@@ -116,40 +136,45 @@ const mostrarPantallaRetiro = () => {
             <button type="button" class="" id="btnRegresar">Regresar</button>
         </div>
     </div>
-</div>`
-} */
+</div>
+`
+    const btnRegresar = document.querySelector('#btnRegresar');
+    btnRegresar.addEventListener('click', mostrarPantallaUsuario);
+}
 
-/* const mostrarPantallaCambiarPass = () => {
-    formInicioSesion.innerHTML = `<div class="container">
-    <div class="row text-center">
-        <div class="col-12">
-            <h1 id="saldoUsuario">¿Deseas cambiar tu Contraseña?</h1>
+const mostrarPantallaCambiarPass = () => {
+    container.innerHTML = `
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-12">
+                <h1>¿Deseas cambiar tu Contraseña?</h1>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-12">
+                <label for="actualPass" class="actualPass">Ingresa tu contraseña actual:</label>
+                <input type="password" class="form-label" id="passInput" placeholder="Contraseña...">            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-12">
+                <label for="newPass" class="newPass">Ingresa tu nueva contraseña:</label>
+                <input type="password" class="form-label" id="newPassInput" placeholder="Contraseña...">            </div>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-6">
+                <button type="button" class="" id="btnNewPass">Guardar</button>
+            </div>
+            <div class="col-6">
+                <button type="button" class="" id="btnRegresar">Regresar</button>
+            </div>
         </div>
     </div>
-    <div class="row text-center">
-        <div class="col-12">
-            <label for="retiro" class="cambioPass">Ingresa tu contraseña actual:</label>
-            <input type="password" class="form-label" id="passInput" placeholder="Contraseña...">            </div>
-    </div>
-    <div class="row text-center">
-        <div class="col-12">
-            <label for="retiro" class="retirar">Ingresa tu nueva contraseña:</label>
-            <input type="password" class="form-label" id="newPassInput" placeholder="Contraseña...">            </div>
-        </div>
-    </div>
-    <div class="row text-center">
-        <div class="col-6">
-            <button type="button" class="" id="btnNewPass">Guardar</button>
-        </div>
-        <div class="col-6">
-            <button type="button" class="" id="btnRegresar">Regresar</button>
-        </div>
-    </div>
-</div>`
-} */
+`
+    const btnRegresar = document.querySelector('#btnRegresar');
+    btnRegresar.addEventListener('click', mostrarPantallaUsuario);
+}
 
 btnEnviar.addEventListener('click', validarUsuario)
-btnPantallaDepositar.addEventListener('click', mostrarPantallaDeposito)
-
 
 
