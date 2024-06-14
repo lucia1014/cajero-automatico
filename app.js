@@ -4,13 +4,13 @@ const userInput = document.querySelector('#userInput');
 const passInput = document.querySelector('#passInput');
 const btnEnviar = document.querySelector('#btnEnviar');
 const container = document.querySelector('.container');
-const inicio = document.querySelector('#inicioSesion');
 
 
 let botonPantallaDepositar,
     botonPantallaRetirar,
-    botonPantallaCambioPass,
-    botonCerrarSesion;
+    botonCerrarSesion,
+    botonDepositar,
+    botonRetirar;
 
 let usuarioActivo = {
     user: '',
@@ -39,141 +39,191 @@ const validarUsuario = (e) => {
 
 console.log(usuarioActivo)
 
-const mostrarPantallaUsuario = (userActive, userSaldo) => {
+const mostrarPantallaUsuario = () => {
     container.innerHTML = `
-        <div class="container">
+    <div class="container bg-white rounded-end-lg rounded-start-lg py-5 mt-5">
         <div class="row text-center">
-            <div class="col-12">
-                <h1 id="bienvenido">Bienvenido/a a tu banco ${userActive} </h1>
-                <h2 id="saldoUsuario">Tu saldo actual es de ${userSaldo}</h2>
-                <h4>¿Qué acción deseas realizar?</h4>
+            <div class="col-12 text-black" id="bienvenido">
+                <h1>Bienvenido/a a tu banco ${usuarioActivo.user} </h1>
             </div>
         </div>
         <div class="row text-center">
-            <div class="row">
+            <div class="col-12 text-black">
+                <p id="saldoUsuario" class="fs-3">Tu saldo actual es de $${usuarioActivo.saldo}</p>
+                <p class="fst-italic">¿Qué acción deseas realizar?</p>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="row mt-4">
                 <div class="col-6">
-                    <button type='button' class="" id="btnPantallaDeposito">Depositar</button>
+                    <button type='button' class="btn btn-primary btn-lg" id="btnPantallaDeposito">Depositar</button>
                 </div>
                 <div class="col-6">
-                    <button type='button' class="" id="btnPantallaCambioPass">Cambiar contraseña</button>
+                    <button type='button' class="btn btn-primary btn-lg" id="btnPantallaRetiro">Retirar</button>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <button type='button' class="" id="btnPantallaRetiro">Retirar</button>
-                </div>
-                <div class="col-6">
-                    <button type='button' class="" id="btnPantallaCerrarSesion">Cerrar sesión</button>
+            <div class="row mt-5">
+                <div class="col-12">
+                    <button type='button' class="btn btn-danger" id="btnPantallaLogOut">Cerrar sesión</button>
                 </div>
             </div>
         </div>
     </div>
     `
     botonPantallaDepositar = document.getElementById('btnPantallaDeposito');
-    botonPantallaDepositar.addEventListener('click', () => mostrarPantallaDeposito(userSaldo));
+    botonPantallaDepositar.addEventListener('click', () => mostrarPantallaDeposito(usuarioActivo.saldo));
 
     botonPantallaRetirar = document.getElementById('btnPantallaRetiro');
-    botonPantallaRetirar.addEventListener('click', () => mostrarPantallaRetiro(userSaldo));
+    botonPantallaRetirar.addEventListener('click', () => mostrarPantallaRetiro(usuarioActivo.saldo));
 
-    botonPantallaCambioPass = document.getElementById('btnPantallaCambioPass');
-    botonPantallaCambioPass.addEventListener('click', () => mostrarPantallaCambiarPass());
-
-    botonCerrarSesion = document.getElementById('btnPantallaCerrarSesion');
-    botonCerrarSesion.addEventListener('click',);
+    botonCerrarSesion = document.querySelector('#btnPantallaLogOut')
+    botonCerrarSesion.addEventListener('click', logOut);
+    
 }
 
-const mostrarPantallaDeposito = userSaldo => {
+const mostrarPantallaDeposito = () => {
     container.innerHTML = `
-    <div class="container">
-    <div class="row text-center">
-        <div class="col-12">
-            <h1 id="saldoUsuario">Tu saldo actual es de $${userSaldo}</h1>
+    <div class="container bg-white rounded-end-lg rounded-start-lg py-5 mt-5">
+        <div class="row text-center text-black">
+            <div class="col-6">
+                <div class="col-12 bg-info rounded-end-lg rounded-start-lg">
+                    <h2>Deposito</h2>
+                    <p> 
+                        $ <spam id="deposito">0</spam>
+                    </p>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="col-12 bg-success rounded-end-lg rounded-start-lg">
+                    <h2>Balance</h2>
+                    <p> 
+                        $ <spam id="balance">${usuarioActivo.saldo}</spam>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center text-black operaciones">
+            <div class="col-6 bg-light mx-3" style="width: 300px;">
+                <div class="col-12 mt-2">
+                    <label for="deposito" class="depositar">Cantidad a depositar:</label>
+                </div>
+                <div class="col-12 ingresoValor">
+                    <input type="number" id="cantidadDeposito" class="form-control mt-3" style="width: 200px;" placeholder="$0">
+                </div>
+                <div class="col-12 btnOperacion">
+                    <button type="button" class="btn btn-funcion w-200px my-4" id="btnDeposito">Depositar</button>
+                </div>
+            </div>
+            <div class="col-6 py-5 mt-3">
+                <button type='button' class="btn btn-danger" id="btnRegresar">Regresar</button>
+            </div>
         </div>
     </div>
-    <div class="row text-center">
-        <div class="col-12">
-            <label for="deposito" class="depositar">Cantidad a depositar:</label>
-            <input type="number" class="depositar" id="cantidadDeposito" placeholder="$0">
-        </div>
-    </div>
-    <div class="row text-center">
-        <div class="col-6">
-            <button type="button" class="" id="btnDeposito">Depositar</button>
-        </div>
-        <div class="col-6">
-            <button type="button" class="" id="btnRegresar">Regresar</button>
-        </div>
-    </div>
-</div>
-`
+    `
+    botonDepositar = document.getElementById('btnDeposito');
+    botonDepositar.addEventListener('click', depositar);
+
     const btnRegresar = document.querySelector('#btnRegresar');
     btnRegresar.addEventListener('click', mostrarPantallaUsuario);
 }
 
 const depositar = () => {
 
+    const deposit = document.querySelector('#deposito');
+    const balance = document.querySelector('#balance');
+    const depositoInput = document.querySelector('#cantidadDeposito');
+    const value = depositoInput.value;
+    const newBalance = Number(balance.innerText) + Number(value);
+    if (newBalance > 990) {
+        alert('Tu monto excede el máximo de saldo permitido.')
+    } else {
+        deposit.innerText = value;
+        balance.innerText = newBalance;
+    }
+    depositoInput.value = '';
+
 }
 
-const mostrarPantallaRetiro = userSaldo => {
+
+const mostrarPantallaRetiro = () => {
     container.innerHTML = `
-    <div class="container">
-    <div class="row text-center">
-        <div class="col-12">
-            <h1 id="saldoUsuario">Tu saldo actual es de $$${userSaldo}</h1>
+    <div class="container bg-white rounded-end-lg rounded-start-lg py-5 mt-5">
+        <div class="row text-center text-black">
+            <div class="col-6">
+                <div class="col-12 bg-info rounded-end-lg rounded-start-lg">
+                    <h2>Retiro</h2>
+                    <p> 
+                        $<spam id="retiro">0</spam>
+                    </p>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="col-12 bg-success rounded-end-lg rounded-start-lg">
+                    <h2>Balance</h2>
+                    <p> 
+                        $<spam id="balance">${usuarioActivo.saldo}</spam>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center text-black operaciones">
+            <div class="col-6 bg-light mx-3" style="width: 300px;">
+                <div class="col-12 mt-2">
+                    <label for="retiro" class="retirar">Cantidad a retirar:</label>
+                </div>
+                <div class="col-12 ingresoValor">
+                    <input type="number" id="cantidadRetiro" class="form-control mt-3" style="width: 200px;" placeholder="$0">
+                </div>
+                <div class="col-12 btnOperacion">
+                    <button type="button" class="btn btn-funcion w-200px my-4" id="btnRetiro">Retirar</button>
+                </div>
+            </div>
+            <div class="col-6 py-5 mt-3">
+                <button type='button' class="btn btn-danger" id="btnRegresar">Regresar</button>
+            </div>
         </div>
     </div>
-    <div class="row text-center">
-        <div class="col-12">
-            <label for="retiro" class="retirar">Cantidad a retirar:</label>
-            <input type="number" class="retirar" id="cantidaRetiro" placeholder="$0">
-        </div>
-    </div>
-    <div class="row text-center">
-        <div class="col-6">
-            <button type="button" class="" id="btnRetiro">Retirar</button>
-        </div>
-        <div class="col-6">
-            <button type="button" class="" id="btnRegresar">Regresar</button>
-        </div>
-    </div>
-</div>
-`
+    `
+    botonRetirar = document.getElementById('btnRetiro');
+    botonRetirar.addEventListener('click', retirar);
+
     const btnRegresar = document.querySelector('#btnRegresar');
     btnRegresar.addEventListener('click', mostrarPantallaUsuario);
 }
 
-const mostrarPantallaCambiarPass = () => {
-    container.innerHTML = `
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-12">
-                <h1>¿Deseas cambiar tu Contraseña?</h1>
-            </div>
-        </div>
-        <div class="row text-center">
-            <div class="col-12">
-                <label for="actualPass" class="actualPass">Ingresa tu contraseña actual:</label>
-                <input type="password" class="form-label" id="passInput" placeholder="Contraseña...">            </div>
-        </div>
-        <div class="row text-center">
-            <div class="col-12">
-                <label for="newPass" class="newPass">Ingresa tu nueva contraseña:</label>
-                <input type="password" class="form-label" id="newPassInput" placeholder="Contraseña...">            </div>
-            </div>
-        </div>
-        <div class="row text-center">
-            <div class="col-6">
-                <button type="button" class="" id="btnNewPass">Guardar</button>
-            </div>
-            <div class="col-6">
-                <button type="button" class="" id="btnRegresar">Regresar</button>
-            </div>
-        </div>
-    </div>
-`
-    const btnRegresar = document.querySelector('#btnRegresar');
-    btnRegresar.addEventListener('click', mostrarPantallaUsuario);
+const retirar = () => {
+
+    const retiro = document.querySelector('#retiro');
+    const balance = document.querySelector('#balance');
+    const retiroInput = document.querySelector('#cantidadRetiro');
+    const value = retiroInput.value;
+    const newBalance = Number(balance.innerText) - Number(value);
+    if (newBalance < 10) {
+        alert('Tu monto excede el minimo de saldo permitido.')
+    } else {
+        retiro.innerText = value;
+        balance.innerText = newBalance;
+    }
+    retiroInput.value = '';
 }
+
+
+const regresar = () => {
+    const balance = document.querySelector('#balance');
+
+    document.querySelector('.operacion').
+    localStorage.setItem(balance.innerText);
+
+
+
+}
+
+
+const logOut = () => {
+    window.location.replace("index.html")
+}
+
+
 
 btnEnviar.addEventListener('click', validarUsuario)
 

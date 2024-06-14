@@ -12,29 +12,39 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-12">
-                <h1>¿Deseas cambiar tu Contraseña?</h1>
-            </div>
-        </div>
-        <div class="row text-center">
-            <div class="col-12">
-                <label for="actualPass" class="actualPass">Ingresa tu contraseña actual:</label>
-                <input type="password" class="form-label" id="passInput" placeholder="Contraseña...">            </div>
-        </div>
-        <div class="row text-center">
-            <div class="col-12">
-                <label for="newPass" class="newPass">Ingresa tu nueva contraseña:</label>
-                <input type="password" class="form-label" id="newPassInput" placeholder="Contraseña...">            </div>
-            </div>
-        </div>
-        <div class="row text-center">
+    <div class="container bg-white rounded-end-lg rounded-start-lg py-5 mt-5">
+        <div class="row text-center text-black">
             <div class="col-6">
-                <button type="button" class="" id="btnNewPass">Guardar</button>
+                <div class="col-12 bg-info rounded-end-lg rounded-start-lg">
+                    <h2>Deposito</h2>
+                    <p> 
+                        $ <spam id="deposito">0</spam>
+                    </p>
+                </div>
             </div>
             <div class="col-6">
-                <button type="button" class="" id="btnRegresar">Regresar</button>
+                <div class="col-12 bg-success rounded-end-lg rounded-start-lg">
+                    <h2>Balance</h2>
+                    <p> 
+                        $ <spam id="balance">${usuarioActivo.saldo}</spam>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center text-black operaciones">
+            <div class="col-6 bg-light mx-3" style="width: 300px;">
+                <div class="col-12 mt-2">
+                    <label for="deposito" class="depositar">Cantidad a depositar:</label>
+                </div>
+                <div class="col-12 ingresoValor">
+                    <input type="number" class="form-control mt-3" style="width: 200px;" placeholder="$0">
+                </div>
+                <div class="col-12 btnDeposito">
+                    <button type="button" class="btn btn-funcion w-200px my-4" id="btnDeposito">Depositar</button>
+                </div>
+            </div>
+            <div class="col-6 py-5 mt-3">
+                <button type='button' class="btn btn-danger" id="btnRegresar">Regresar</button>
             </div>
         </div>
     </div>
