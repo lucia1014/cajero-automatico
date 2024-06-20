@@ -69,10 +69,10 @@ const mostrarPantallaUsuario = () => {
         </div>
         <div class="row text-center">
             <div class="row mt-4">
-                <div class="col-12 col-md-6">
+                <div class="col-md-6">
                     <button type='button' class="btn btn-primary btn-lg" id="btnPantallaDeposito">Depositar</button>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-md-6">
                     <button type='button' class="btn btn-primary btn-lg" id="btnPantallaRetiro">Retirar</button>
                 </div>
             </div>
@@ -99,7 +99,7 @@ const mostrarPantallaDeposito = () => {
     container.innerHTML = `
     <div class="container bg-white rounded-end-lg rounded-start-lg py-5 mt-5">
         <div class="row text-center text-black">
-            <div class="col-12 col-md-6">
+            <div class="col-md-6">
                 <div class="col-12 bg-info rounded-end-lg rounded-start-lg">
                     <h2>Deposito</h2>
                     <p> 
@@ -107,7 +107,7 @@ const mostrarPantallaDeposito = () => {
                     </p>
                 </div>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-md-6">
                 <div class="col-12 bg-success rounded-end-lg rounded-start-lg">
                     <h2>Balance</h2>
                     <p> 
@@ -168,7 +168,7 @@ const mostrarPantallaRetiro = () => {
     container.innerHTML = `
     <div class="container bg-white rounded-end-lg rounded-start-lg py-5 mt-5">
         <div class="row text-center text-black">
-            <div class="col-12 col-md-6">
+            <div class="col-md-6">
                 <div class="col-12 bg-info rounded-end-lg rounded-start-lg">
                     <h2>Retiro</h2>
                     <p> 
@@ -176,7 +176,7 @@ const mostrarPantallaRetiro = () => {
                     </p>
                 </div>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-md-6">
                 <div class="col-12 bg-success rounded-end-lg rounded-start-lg">
                     <h2>Balance</h2>
                     <p> 
