@@ -26,6 +26,20 @@ const validarUsuario = (e) => {
             console.log('validacion correcta')
             userInput.value = ''
             passInput.value = ''
+            
+            const localUser = localStorage.getItem(users[i].nombre)
+            if (localUser) {
+                const userParse = JSON.parse(localUser)
+                console.log(userParse)
+
+                usuarioActivo.user = userParse.usuarioActivo.user;
+                usuarioActivo.saldo = userParse.usuarioActivo.saldo;
+                mostrarPantallaUsuario();
+                return;
+
+            }
+
+            localStorage.setItem(users[i].nombre, JSON.stringify(users[i]));
             usuarioActivo.user = users[i].nombre;
             usuarioActivo.saldo = users[i].saldo;
             mostrarPantallaUsuario(users[i].nombre, users[i].saldo);
@@ -134,11 +148,16 @@ const depositar = () => {
     const depositoInput = document.querySelector('#cantidadDeposito');
     const value = depositoInput.value;
     const newBalance = Number(balance.innerText) + Number(value);
+
     if (newBalance > 990) {
         alert('Tu monto excede el máximo de saldo permitido.')
+        return
     } else {
         deposit.innerText = value;
         balance.innerText = newBalance;
+
+        usuarioActivo.saldo = newBalance;
+        localStorage.setItem(usuarioActivo.user, JSON.stringify({ usuarioActivo }));
     }
     depositoInput.value = '';
 
@@ -198,25 +217,21 @@ const retirar = () => {
     const retiroInput = document.querySelector('#cantidadRetiro');
     const value = retiroInput.value;
     const newBalance = Number(balance.innerText) - Number(value);
+
     if (newBalance < 10) {
         alert('Tu monto excede el minimo de saldo permitido.')
+        return
     } else {
         retiro.innerText = value;
         balance.innerText = newBalance;
+
+        usuarioActivo.saldo = newBalance;
+        localStorage.setItem(usuarioActivo.user, JSON.stringify({ usuarioActivo }));
+
     }
     retiroInput.value = '';
 }
 
-
-const regresar = () => {
-    const balance = document.querySelector('#balance');
-
-    document.querySelector('.operacion').
-    localStorage.setItem(balance.innerText);
-
-
-
-}
 
 
 const logOut = () => {
